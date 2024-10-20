@@ -4,7 +4,7 @@
         <h1 class="display-4">Bienvenido a la App de Reseñas de Películas</h1>
         <p class="lead">Consulta las películas más populares y deja tu opinión.</p>
         <hr class="my-4">
-        <p>¡Explora y disfruta de las mejores películas de todos los tiempos!</p>
+        <p>¡Explora y disfruta de las mejores películas!</p>
         <a class="btn btn-primary btn-lg" href="/peliculas" role="button">Ver Películas</a>
       </div>
   
@@ -36,13 +36,13 @@
   export default {
     data() {
       return {
-        recommendedMovies: [], // Puedes llenar esto con las películas recomendadas
+        recommendedMovies: [], 
       };
     },
     async created() {
       try {
         const data = await tmdbService.getPopularMovies();
-        this.recommendedMovies = data.results.slice(0, 6); // Muestra las primeras 6 películas
+        this.recommendedMovies = data.results.slice(0, 6); 
       } catch (error) {
         console.error('Error loading recommended movies:', error);
       }

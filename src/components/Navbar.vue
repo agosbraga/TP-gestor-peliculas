@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">App de Películas</a>
         <button

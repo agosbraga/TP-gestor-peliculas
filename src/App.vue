@@ -19,10 +19,10 @@ export default {
 </script>
 
 <style>
-/* Puedes incluir aquí estilos globales si lo necesitas */
+
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f8f9fa; /* Un gris suave de fondo */
+  background-color: #f8f9fa; 
   margin: 0;
   padding: 0;
 }
