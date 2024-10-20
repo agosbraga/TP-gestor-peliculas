@@ -1,16 +1,29 @@
 <template>
-    <div>
-      <h1>Películas</h1>
-      <ul>
-        <li v-for="movie in movies" :key="movie.id">
-          <img 
-            :src="`https://image.tmdb.org/t/p/w185${movie.poster_path}`" 
-            :alt="movie.title" 
-            style="width: 342px; height: auto;" 
-          />
-          <p>{{ movie.title }}</p>
-        </li>
-      </ul>
+    <div class="container my-4">
+      <h1 class="text-center mb-4">Películas Populares</h1>
+      <div class="row">
+        <div 
+          class="col-md-4 mb-4 d-flex align-items-stretch"
+          v-for="movie in movies" 
+          :key="movie.id"
+        >
+          <div class="card shadow-sm w-100">
+            <img 
+              :src="`https://image.tmdb.org/t/p/w342${movie.poster_path}`" 
+              :alt="movie.title" 
+              class="card-img-top"
+            />
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <p class="card-text">{{ movie.overview ? movie.overview.slice(0, 100) + '...' : 'Descripción no disponible' }}</p>
+              <a 
+                class="btn btn-primary mt-auto" 
+                :href="`/peliculas/${movie.id}`" 
+                >Ver más detalles</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </template>
   
@@ -33,3 +46,11 @@
     },
   };
   </script>
+  
+  <style scoped>
+  .card-img-top {
+    max-height: 500px;
+    object-fit: cover;
+  }
+  </style>
+  

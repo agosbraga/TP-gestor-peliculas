@@ -34,7 +34,21 @@ const tmdbService = {
     }
   },
 
-  
+  async getMovieDetails(movieId) {
+    try {
+      const response = await axios.get(`${BASE_URL}/movie/${movieId}`, {
+        params: {
+          api_key: API_KEY,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching movie details:', error);
+      throw error;
+    }
+  },
 };
+
+  
 
 export default tmdbService;
