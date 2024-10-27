@@ -14,7 +14,14 @@
         <p class="lead">{{ movie.overview }}</p>
         <div class="movie-info">
           <p><strong>Fecha de lanzamiento:</strong> {{ formatDate(movie.release_date) }}</p>
-          <p><strong>Calificación TMDB:</strong> {{ movie.vote_average }}/10</p>
+          <div class="ratings-container">
+            <p><strong>Calificación TMDB:</strong> {{ movie.vote_average }}/10</p>
+            <p>
+              <strong>Promedio reseñas usuarios:</strong> 
+              <span v-if="promedioResenas"> {{ promedioResenas }}/10</span>
+              <span v-else class="text-muted">(Sin reseñas)</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -118,6 +125,11 @@ export default {
       return this.movie?.poster_path 
         ? `https://image.tmdb.org/t/p/w500${this.movie.poster_path}`
         : null;
+    },
+    promedioResenas() {
+      if (!this.reviews.length) return null;
+      const suma = this.reviews.reduce((acc, review) => acc + review.calificacion, 0);
+      return (suma / this.reviews.length).toFixed(1);
     }
   },
 
@@ -179,6 +191,12 @@ export default {
   padding: 1rem;
   border-radius: 0.5rem;
   margin-top: 1rem;
+}
+
+.ratings-container {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
 }
 
 .card {
