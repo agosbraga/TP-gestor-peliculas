@@ -6,6 +6,7 @@ import DetallePelicula from '../components/DetallePelicula.vue';
 import { useAuthStore } from '../store/auth';
 import Admin from '../components/Admin.vue';
 import Login from '../components/Login.vue';
+import Register from '../components/Register.vue';
 
 const routes = [
     {path: '/', component: Home},
@@ -13,6 +14,7 @@ const routes = [
     {path: '/peliculas', name: 'ListaDePeliculas', component: ListaDePeliculas },
     { path: '/peliculas/:id', name: 'DetallePelicula', component: DetallePelicula },
     {path: '/login', name: 'Login', component: Login },
+    {path: '/register', name: 'register', component: Register },
     { path: '/admin', name: 'Admin', component: Admin, meta: { requiereAuth: true, role: 'admin'}},
        
    

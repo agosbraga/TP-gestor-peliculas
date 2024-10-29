@@ -10,7 +10,7 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async login(username, password) {
       try {
-        const response = await axios.get('https://fakestoreapi.com/users');// usando FAKE STORE API
+        const response = await axios.get('https://6720f79198bbb4d93ca6e2b7.mockapi.io/user/users');// mockapi
         const user = response.data.find(
           (u) => u.username === username && u.password === password
         );
@@ -31,6 +31,33 @@ export const useAuthStore = defineStore('auth', {
         alert('Ocurrió un error en el inicio de sesión');
       }
     },
+    async register(username, password) {
+      try {
+        const response = await axios.get('https://6720f79198bbb4d93ca6e2b7.mockapi.io/user/users');
+        const userExists = response.data.find((u) => u.username === username);
+    
+        if (userExists) {
+          alert('El usuario ya existe. Intenta con otro nombre de usuario.');
+          return;
+        }
+    
+        // Crear el nuevo usuario con un POST si no existe
+        const newUser = { username, password };
+        const createUserResponse = await axios.post('https://6720f79198bbb4d93ca6e2b7.mockapi.io/user/users', newUser);
+    
+        this.user = createUserResponse.data;
+        this.token = 'fake-jwt-token'; // Simula el token
+        this.isAuthenticated = true;
+    
+        localStorage.setItem('user', JSON.stringify(this.user));
+        localStorage.setItem('token', this.token);
+    
+        alert('Registro exitoso. ¡Bienvenido!');
+      } catch (error) {
+        console.error('Error al registrar:', error);
+        alert('Ocurrió un error en el registro');
+      }
+      },
     logout() {
       this.user = null;
       this.token = null;
