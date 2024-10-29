@@ -4,16 +4,7 @@
       <div v-if="isAuthenticated" class="card mb-4">
         <div class="card-body">
           <form @submit.prevent="submitReview">
-            <div class="mb-3">
-              <label for="name" class="form-label">Nombre</label>
-              <input 
-                type="text" 
-                class="form-control"
-                id="name" 
-                v-model.trim="newReview.name" 
-                required
-              />
-            </div>
+            
             
             <div class="mb-3">
               <label for="rating" class="form-label">Calificación</label>
@@ -117,18 +108,22 @@
           alert("Por favor, inicia sesión para enviar una reseña.");
           return;
         }
-  
+
         try {
-          this.newReview.movieId = this.movieId; // Asigna el ID de la película
+          const authStore = useAuthStore();
+          const user = authStore.user;
+          
+          this.newReview.movieId = this.movieId;
+          this.newReview.name = `${user.name} ${user.lastName}`;
+          this.newReview.userId = user.id;
+          
           await axios.post(`${MOCKAPI_BASE_URL}/resenias`, this.newReview);
-          await this.fetchReviews(); // Recarga reseñas después de enviar
+          await this.fetchReviews();
           
           // Limpiar formulario
           this.newReview = {
-            name: '',
             calificacion: 5,
             comentario: '',
-            movieId: null
           };
         } catch (error) {
           console.error('Error al enviar la reseña:', error);
