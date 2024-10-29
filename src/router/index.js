@@ -7,6 +7,8 @@ import { useAuthStore } from '../store/auth';
 import Admin from '../components/Admin.vue';
 import Login from '../components/Login.vue';
 import Register from '../components/Register.vue';
+import GuardadasView from '../components/GuardadasView.vue';
+import VistasView from '../components/VistasView.vue';
 
 const routes = [
     {path: '/', component: Home},
@@ -16,9 +18,9 @@ const routes = [
     {path: '/login', name: 'Login', component: Login },
     {path: '/register', name: 'register', component: Register },
     { path: '/admin', name: 'Admin', component: Admin, meta: { requiereAuth: true, role: 'admin'}},
-       
-   
-]
+    { path: '/guardadas', name: 'Guardadas', component: GuardadasView, meta: { requiereAuth: true }},
+    { path: '/vistas', name: 'Vistas', component: VistasView, meta: { requiereAuth: true }}
+]; 
 
 const router = createRouter ({
     history: createWebHistory(),

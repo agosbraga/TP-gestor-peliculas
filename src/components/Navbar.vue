@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">App de Películas</a>
+      <router-link class="navbar-brand" to="/">App de Películas</router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -24,9 +24,16 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/peliculas">Películas</router-link>
           </li>
+          <li v-if="isAuthenticated" class="nav-item">
+            <router-link class="nav-link" to="/guardadas">Guardadas</router-link>
+          </li>
+          <li v-if="isAuthenticated" class="nav-item">
+            <router-link class="nav-link" to="/vistas">Vistas</router-link>
+          </li>
           <li v-if="isAdmin" class="nav-item">
             <router-link class="nav-link" to="/admin">Admin</router-link>
           </li>
+          
         </ul>
         
         <ul class="navbar-nav ms-auto">
