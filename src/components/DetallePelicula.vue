@@ -80,14 +80,14 @@ export default {
 
   methods: {
     async fetchReviews(movieId) {
-      try {
-        const response = await axios.get(`${MOCKAPI_BASE_URL}/resenias`);
-        this.reviews = response.data.filter(review => review.movieId === movieId);
-        this.updateAverage(); // Calcular promedio después de obtener reseñas
-      } catch (error) {
-        console.error('Error al obtener reseñas:', error);
-      }
-    },
+  try {
+    const response = await axios.get(`${MOCKAPI_BASE_URL}/resenias`);
+    this.reviews = response.data.filter(review => Number(review.movieId) === Number(movieId));
+    this.updateAverage();
+  } catch (error) {
+    console.error('Error al obtener reseñas:', error);
+  }
+},
 
     updateAverage() {
       if (this.reviews.length > 0) {
