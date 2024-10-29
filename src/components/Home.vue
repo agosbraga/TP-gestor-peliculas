@@ -25,11 +25,15 @@
                 </div>
             </div>
         </div>
+
+        <!-- Footer -->
+        <Footer />
     </div>
 </template>
 
 <script>
     import tmdbService from '../services/tmdbService';
+    import Footer from '../components/Footer.vue'; // Importa el componente Footer
 
     export default {
         data() {
@@ -45,6 +49,9 @@
                 console.error('Error loading recommended movies:', error);
             }
         },
+        components: {
+            Footer, // Registra el componente Footer
+        },
     };
 </script>
 
@@ -52,35 +59,35 @@
     .jumbotron {
         background-color: #f8f9fa;
         border-radius: 0.3rem;
-        padding: 2rem 1rem; 
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        padding: 2rem 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .card {
         border: none;
-        transition: transform 0.3s; 
+        transition: transform 0.3s;
     }
 
         .card:hover {
-            transform: scale(1.05); 
+            transform: scale(1.05);
         }
 
     .card-title {
-        font-size: 1.5rem; 
-        color: #343a40; 
+        font-size: 1.5rem;
+        color: #343a40;
     }
 
     .card-text {
-        font-size: 1rem; 
-        color: #6c757d; 
+        font-size: 1rem;
+        color: #6c757d;
     }
 
     .btn-primary {
-        background-color: #007bff; 
-        border: none; 
+        background-color: #007bff;
+        border: none;
     }
 
         .btn-primary:hover {
-            background-color: #0056b3; 
+            background-color: #0056b3;
         }
 </style>

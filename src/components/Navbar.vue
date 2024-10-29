@@ -73,5 +73,29 @@ const logout = () => {
 </script>
 
 <style scoped>
+    .navbar {
+        padding: 1rem 2rem;
+    }
 
+    .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .nav-link {
+        color: #f8f9fa;
+        margin: 0 10px;
+    }
+
+        .nav-link:hover {
+            color: #007bff;
+        }
+
+    .dropdown-item {
+        color: #343a40;
+    }
+
+        .dropdown-item:hover {
+            background-color: #e9ecef;
+        }
 </style>
