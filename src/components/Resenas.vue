@@ -35,7 +35,9 @@
           </form>
         </div>
       </div>
-      <div v-else class="alert alert-warning">Por favor, inicia sesión para dejar una reseña.</div>
+      <div v-else class="alert alert-warning">
+        Por favor, <a href="/login">inicia sesión</a> para dejar una reseña.
+      </div>
   
       <!-- Lista de Reseñas -->
       <div v-if="reviews.length > 0">

@@ -2,17 +2,7 @@
   <div class="container my-4">
     <h2>Registro</h2>
     <form @submit.prevent="handleRegister">
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input 
-          type="text" 
-          v-model="username" 
-          id="username" 
-          class="form-control"
-          placeholder="Usuario" 
-          required 
-        />
-      </div>
+      
       <div class="mb-3">
         <label for="name" class="form-label">Nombre</label>
         <input 
@@ -36,6 +26,17 @@
         />
       </div>
       <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input 
+          type="text" 
+          v-model="username" 
+          id="username" 
+          class="form-control"
+          placeholder="Usuario" 
+          required 
+        />
+      </div>
+      <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <input 
           type="password" 
@@ -47,6 +48,7 @@
         />
       </div>
       <button type="submit" class="btn btn-primary">Registrarse</button>
+      si ya estás registrado, <a href="/login">haz click aquí</a>
     </form>
   </div>
 </template>

@@ -25,6 +25,7 @@
           />
         </div>
         <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+         si aún no estás registrado, <a href="/register">haz click aquí</a>
       </form>
     </div>
   </template>
@@ -48,7 +49,7 @@
       if (authStore.user?.role === 'admin') {
         router.push('/admin');
       } else {
-        router.push('/home');
+        router.push('/');
       }
     } else {
       alert("Credenciales inválidas");

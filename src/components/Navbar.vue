@@ -90,7 +90,7 @@ const logout = () => {
     }
 
     .nav-link {
-        color: #f8f9fa;
+        color: #f4faff;
         margin: 0 10px;
     }
 
@@ -99,10 +99,10 @@ const logout = () => {
         }
 
     .dropdown-item {
-        color: #343a40;
+        color: #c77070;
     }
 
         .dropdown-item:hover {
-            background-color: #e9ecef;
+            background-color: #191b1d;
         }
 </style>
