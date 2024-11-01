@@ -39,10 +39,11 @@
                     <p class="text-muted small">{{ formatDate(review.createdAt) }}</p>
                     <p class="card-text">{{ review.comentario }}</p>
 
-                    <!-- Botón de Editar (solo para el autor de la reseña) -->
-                    <button v-if="isReviewOwner(review)" @click="editReview(review)" class="btn btn-secondary btn-sm">
-                        Editar
-                    </button>
+                    <!-- Botones de Editar y Eliminar (disponible para el autor de la reseña) -->
+                    <div v-if="isReviewOwner(review)" class="mt-2">
+                        <button @click="editReview(review)" class="btn btn-secondary btn-sm me-2">Editar</button>
+                        <button @click="deleteReview(review.id)" class="btn btn-danger btn-sm">Eliminar</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -114,14 +115,14 @@
 
                     await axios.post(`${MOCKAPI_BASE_URL}/resenias`, this.newReview);
                     await this.fetchReviews();
-                    
+
                     this.resetForm();
                 } catch (error) {
                     console.error('Error al enviar la reseña:', error);
                 }
             },
 
-            // carga la reseña en el formulario para editar
+            // Carga la reseña en el formulario para editar
             editReview(review) {
                 this.newReview = { ...review };
                 this.editingReview = review.id; // Almacena el ID de la reseña que se está editando
@@ -138,12 +139,22 @@
                 }
             },
 
+            // Borra la reseña
+            async deleteReview(reviewId) {
+                try {
+                    await axios.delete(`${MOCKAPI_BASE_URL}/resenias/${reviewId}`);
+                    await this.fetchReviews();
+                } catch (error) {
+                    console.error('Error al eliminar la reseña:', error);
+                }
+            },
+
             resetForm() {
                 this.newReview = { calificacion: 5, comentario: '' };
                 this.editingReview = null; // Resetea la reseña que se está editando
             },
 
-            // verificar si el usuario es el dueño de la reseña
+            // Verificar si el usuario es el dueño de la reseña
             isReviewOwner(review) {
                 const authStore = useAuthStore();
                 return review.userId === authStore.user?.id;
@@ -164,3 +175,4 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 </style>
+
