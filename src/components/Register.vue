@@ -67,7 +67,9 @@ const name = ref('');
 const lastName = ref('');
 
 const handleRegister = async () => {
-try {
+
+
+  authStore.register(username.value, password.value);
   const response = await axios.post('https://6720f79198bbb4d93ca6e2b7.mockapi.io/user/users', {
     username: username.value,
     password: password.value,
@@ -78,8 +80,5 @@ try {
   if (response.data) {
     router.push('/login');
   }
-} catch (error) {
-  alert("Error en el registro");
-}
 };
 </script>
