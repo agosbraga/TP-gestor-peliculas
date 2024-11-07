@@ -69,9 +69,11 @@ export default {
 
   async created() {
     const movieId = this.$route.params.id;
+    console.log('Movie ID:', movieId); // Agrega este log
     try {
       const data = await tmdbService.getMovieDetails(movieId);
       this.movie = data;
+      console.log('Movie Data:', data); // Y este también
       await this.fetchReviews(movieId); // Obtener reseñas al crear
     } catch (error) {
       console.error('Error al cargar los datos:', error);

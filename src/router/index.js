@@ -9,6 +9,7 @@ import Login from '../components/Login.vue';
 import Register from '../components/Register.vue';
 import GuardadasView from '../components/GuardadasView.vue';
 import VistasView from '../components/VistasView.vue';
+import BuscarPeliculas from '../components/BuscarPeliculas.vue';
 
 const routes = [
     {path: '/', component: Home},
@@ -19,7 +20,8 @@ const routes = [
     {path: '/register', name: 'register', component: Register },
     { path: '/admin', name: 'Admin', component: Admin, meta: { requiereAuth: true, role: 'admin'}},
     { path: '/guardadas', name: 'Guardadas', component: GuardadasView, meta: { requiereAuth: true }},
-    { path: '/vistas', name: 'Vistas', component: VistasView, meta: { requiereAuth: true }}
+    { path: '/vistas', name: 'Vistas', component: VistasView, meta: { requiereAuth: true }},
+    { path: '/buscarPeliculas', name: 'BuscarPeliculas', component: BuscarPeliculas },
 ]; 
 
 const router = createRouter ({

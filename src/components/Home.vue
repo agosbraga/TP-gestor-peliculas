@@ -8,6 +8,8 @@
             <a class="btn btn-primary btn-lg" href="/peliculas" role="button">Ver Películas</a>
         </div>
 
+        <BuscarPeliculas />
+
         <div class="container">
             <h2 class="text-center my-4">Películas Recomendadas</h2>
             <div class="row">
@@ -33,7 +35,9 @@
 
 <script>
     import tmdbService from '../services/tmdbService';
+    import BuscarPeliculas from '../components/BuscarPeliculas.vue'; // importar componente de busqeuda
     import Footer from '../components/Footer.vue'; // Importa el componente Footer
+    
 
     export default {
         data() {
@@ -50,6 +54,7 @@
             }
         },
         components: {
+            BuscarPeliculas,
             Footer, // Registra el componente Footer
         },
     };
