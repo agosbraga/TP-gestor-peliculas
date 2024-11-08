@@ -35,44 +35,59 @@
   
   <script>
   import axios from 'axios';
-  
+  import { ref, onMounted } from 'vue';
+  import { useRoute } from 'vue-router';
   const TMDB_API_KEY = '603d7bde6e4548b50f364043d0b4115c';
   const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
   
   export default {
-    name: 'BuscarPeliculas',
-    data() {
-      return {
-        query: '',
-        peliculas: [],
-        buscado: false,
-      };
+  name: 'BuscarPeliculas',
+  data() {
+    return {
+      query: '',        
+      peliculas: [],    
+      buscado: false,   
+    };
+  },
+  created() {
+    this.query = this.$route.query.q || '';
+    if (this.query) {
+      this.buscarPeliculas();
+    }
+  },
+  watch: {
+    '$route.query.q'(newQuery) {
+      this.query = newQuery || '';
+      if (this.query) {
+        this.buscarPeliculas();
+      }
+    }
+  },
+  methods: {
+    async buscarPeliculas() {
+      if (this.query.trim() === '') return;
+      this.buscado = true;
+      try {
+        const response = await axios.get(`${TMDB_BASE_URL}/search/movie`, {
+          params: {
+            api_key: TMDB_API_KEY,
+            query: this.query,
+            language: 'es-ES',
+          },
+        });
+        this.peliculas = response.data.results;
+      } catch (error) {
+        console.error('Error al buscar películas:', error);
+      }
     },
-    methods: {
-      async buscarPeliculas() {
-        if (this.query.trim() === '') return;
-        this.buscado = true;
-        try {
-            const response = await axios.get(`${TMDB_BASE_URL}/search/movie`, {
-            params: {
-              api_key: TMDB_API_KEY,
-              query: this.query,
-              language: 'es-ES',
-            },
-          });
-          this.peliculas = response.data.results;
-        } catch (error) {
-          console.error('Error al buscar películas:', error);
-        }
-      },
-      getPosterUrl(posterPath) {
-        return posterPath ? `https://image.tmdb.org/t/p/w200${posterPath}` : 'URL_DE_IMAGEN_POR_DEFECTO';
-      },
-      verDetallePelicula(id) {
-        this.$router.push({ name: 'DetallePelicula', params: { id } });
-      },
+    getPosterUrl(posterPath) {
+      return posterPath ? `https://image.tmdb.org/t/p/w200${posterPath}` : 'URL_DE_IMAGEN_POR_DEFECTO';
     },
-  };
+    verDetallePelicula(id) {
+      this.$router.push({ name: 'DetallePelicula', params: { id } });
+    },
+  },
+};
   </script>
   
   <style scoped>
