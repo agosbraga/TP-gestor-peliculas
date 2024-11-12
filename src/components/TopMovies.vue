@@ -1,27 +1,69 @@
 <template>
-    <div class="card text-center">
-      <div class="card-body">
-        <h5 class="card-title">Top 3 Películas Más Vistas</h5>
-        <ul class="list-group">
-          <li v-for="(movie, index) in movies" class="list-group-item">
-            <strong>#{{ index + 1 }}:</strong> {{ movie[0] }} - {{ movie[1] }} vistas
-          </li>
+    <div class="top-movies">
+        <h3>Top 3 Películas con más Reseñas</h3>
+        <ul>
+            <li v-for="movie in movies" :key="movie.movieId">
+                <span class="movie-title">Película ID: {{ movie.movieId }}</span>
+                <span class="movie-description">Reseñas: {{ movie.count }}</span>
+            </li>
         </ul>
-      </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      movies: Array,
-    },
+</template>
+
+<script>
+    export default {
+        props: {
+            movies: Array
+        }
     };
-  </script>
-  
-  <style scoped>
-  .card {
-    margin: 10px 0;
-  }
-  </style>
-  
+</script>
+
+<style scoped>
+    .top-movies {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        margin: 0 auto;
+    }
+
+        .top-movies h3 {
+            color: #222222;
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        width: 500px;
+        font-size: 16px;
+        color: #444444;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 12px 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .movie-title {
+        display: block;
+        font-weight: bold;
+        color: #333333;
+        margin-bottom: 4px;
+    }
+
+    .movie-description {
+        display: block;
+        color: #555555;
+    }
+
+    li:hover {
+        background-color: #f0f0f0;
+        color: #222222;
+    }
+</style>

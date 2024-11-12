@@ -1,78 +1,142 @@
 <template>
     <div class="dashboard">
-      <h2>Dashboard metricas</h2>
-      <div class="row">
-          <div class="col-md-4">
-            <MetricCard title="Usuarios Activos" :value="metrics.activeUsers" icon="user" />
-          </div>
+        <h2>Métricas</h2>
 
-        <div class="col-md-4">
-        <TopMovies :movies="topMovies"/>
-      </div>
-      </div>
-      <UserList :users="activeUsers" />
+        <!-- Usuarios Activos y Top de Películas -->
+        <div class="top-metrics">
+            <MetricCard title="Usuarios Activos" :value="metrics.activeUsers" icon="user" />
+            <TopMovies :movies="topMovies" />
+        </div>
+
+        <!-- Usuarios con Actividad Reciente -->
+        <UserList :users="activeUsers" />
     </div>
-  </template>
-  
-  <script>
+</template>
+
+<script>
     import MetricCard from './MetricCard.vue';
     import UserList from './UserList.vue';
     import TopMovies from './TopMovies.vue';
-  
-  export default {
-    components: { MetricCard, UserList, TopMovies },
-    data() {
-      return {
-        metrics: {
-          newMovies: 0,
-          recentReviews: 0,
-          activeUsers: 0,
+
+    export default {
+        components: { MetricCard, UserList, TopMovies },
+        data() {
+            return {
+                metrics: {
+                    activeUsers: 0,
+                },
+                activeUsers: [],
+                topMovies: [],
+            };
         },
-        activeUsers: [],
-        topMovies: [],
-      };
-    },
-    mounted() {
-      this.fetchActiveUsers();
-      this.fetchTopMovies();
-    },
-    methods: {
-      async fetchTopMovies() {
-        const response = await fetch('https://671825ecb910c6a6e02b35be.mockapi.io/api/resenias');
-        const data = await response.json();
+        mounted() {
+            this.fetchActiveUsers();
+            this.fetchTopMovies();
+        },
+        methods: {
+            async fetchTopMovies() {
+                try {
+                    const response = await fetch('https://671825ecb910c6a6e02b35be.mockapi.io/api/resenias');
+                    const data = await response.json();
 
-        const reviewCounts = {};
+                    const reviewCounts = {};
 
-        data.forEach(review => {
-            const { movieId } = review;
-            reviewCounts[movieId] = (reviewCounts[movieId] || 0) + 1;
-        });
+                    data.forEach(review => {
+                        const { movieId } = review;
+                        reviewCounts[movieId] = (reviewCounts[movieId] || 0) + 1;
+                    });
 
-        const sortedMovies = Object.entries(reviewCounts)
-            .sort((a, b) => b[1] - a[1])  // Orden descendente por número de reseñas
-            .slice(0, 3)  // Seleccionar el top 3
+                    const sortedMovies = Object.entries(reviewCounts)
+                        .sort((a, b) => b[1] - a[1])
+                        .slice(0, 3)
+                        .map(([movieId, count]) => ({ movieId, count }));
 
-        this.topMovies = sortedMovies;
-    },
-      async fetchActiveUsers() {
-        // Llama a la API de usuarios
-        const response = await fetch('https://671825ecb910c6a6e02b35be.mockapi.io/api/resenias');
-        const data = await response.json().then(
-            r => r.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)));
-        const activeUsers = new Map();
-        data.forEach(user => {
-            if(!(user.name in activeUsers.keys())){
-                const createdAt = user.createdAt;
-                if(new Date(createdAt).getMonth() === (new Date().getMonth())){
-                    this.metrics.activeUsers += 1;
+                    this.topMovies = sortedMovies;
+                } catch (error) {
+                    console.error('Error al obtener películas:', error);
                 }
-                const movieId = user.movieId; // traer el nombre de la pelicula
-                activeUsers.set(user.name, {createdAt, movieId});
-            }
-        });
-        this.activeUsers = activeUsers;
-      },
-    },
-  };
-  </script>
-  
+            },
+
+            async fetchActiveUsers() {
+                try {
+                    const response = await fetch('https://671825ecb910c6a6e02b35be.mockapi.io/api/resenias');
+                    const data = await response.json();
+
+                    const currentDate = new Date();
+                    const activeUsersMap = new Map();
+
+                    data.forEach(review => {
+                        const reviewDate = new Date(review.createdAt);
+                        const differenceInDays = Math.floor((currentDate - reviewDate) / (1000 * 60 * 60 * 24));
+
+                        if (differenceInDays <= 30) {
+                            activeUsersMap.set(review.userId, {
+                                name: review.name,
+                                createdAt: review.createdAt,
+                            });
+                        }
+                    });
+
+                    this.metrics.activeUsers = activeUsersMap.size;
+                    this.activeUsers = Array.from(activeUsersMap.values());
+                } catch (error) {
+                    console.error('Error al obtener usuarios activos:', error);
+                }
+            },
+        },
+    };
+</script>
+
+<style scoped>
+    .dashboard {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+        color: #222222;
+        font-weight: bold;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .top-metrics {
+        display: flex;
+        gap: 20px;
+        align-items: stretch;
+        margin-bottom: 20px;
+    }
+
+    .metric-card,
+    .top-movies {
+        flex: 1;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+        .metric-card .card-content,
+        .top-movies .card-content {
+            text-align: center;
+            width: 100%;
+        }
+
+    .metric-title {
+        font-size: 18px;
+        color: #555555;
+        margin-bottom: 8px;
+    }
+
+    .metric-value {
+        font-size: 48px;
+        font-weight: bold;
+        color: #222222;
+    }
+</style>
