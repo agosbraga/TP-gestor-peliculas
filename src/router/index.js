@@ -10,6 +10,7 @@ import Register from '../components/Register.vue';
 import GuardadasView from '../components/GuardadasView.vue';
 import VistasView from '../components/VistasView.vue';
 import BuscarPeliculas from '../components/BuscarPeliculas.vue';
+import Dashboard from '../components/Dashboard.vue';
 
 const routes = [
     {path: '/', component: Home},
@@ -22,6 +23,7 @@ const routes = [
     { path: '/guardadas', name: 'Guardadas', component: GuardadasView, meta: { requiereAuth: true }},
     { path: '/vistas', name: 'Vistas', component: VistasView, meta: { requiereAuth: true }},
     { path: '/buscarPeliculas', name: 'BuscarPeliculas', component: BuscarPeliculas },
+    { path: '/dashboard', name: 'Dashboard', component: Dashboard },
 ]; 
 
 const router = createRouter ({
