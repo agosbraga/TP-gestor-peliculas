@@ -23,7 +23,7 @@ const routes = [
     { path: '/guardadas', name: 'Guardadas', component: GuardadasView, meta: { requiereAuth: true }},
     { path: '/vistas', name: 'Vistas', component: VistasView, meta: { requiereAuth: true }},
     { path: '/buscarPeliculas', name: 'BuscarPeliculas', component: BuscarPeliculas },
-    { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+    { path: '/dashboard', name: 'Dashboard', component: Dashboard},
 ]; 
 
 const router = createRouter ({
