@@ -23,7 +23,7 @@ const routes = [
     { path: '/guardadas', name: 'Guardadas', component: GuardadasView, meta: { requiereAuth: true }},
     { path: '/vistas', name: 'Vistas', component: VistasView, meta: { requiereAuth: true }},
     { path: '/buscarPeliculas', name: 'BuscarPeliculas', component: BuscarPeliculas },
-    { path: '/dashboard', name: 'Dashboard', component: Dashboard},
+    { path: '/dashboard', name: 'Dashboard', component: Dashboard, meta: { requiereAuth: true }},
 ]; 
 
 const router = createRouter ({
@@ -36,9 +36,16 @@ router.beforeEach((to, from, next) => {
 
     if (to.meta.role && to.meta.role !== authStore.user?.role) {
         next ({name: 'login'});
-    } else {
-        next()
-    }
+    } else if (to.meta.requiereAuth) {
+        if (authStore.user.RoleAdmin) {
+            next();
+        } else {
+            next('/');
+        }
+    } else{
+        next();
+    } 
+
 })
 
 export default router;
