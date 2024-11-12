@@ -10,11 +10,12 @@ const tmdbService = {
         params: {
           api_key: API_KEY,
           page: page,
+          language: 'es-ES',  // Agregamos soporte para español
         },
       });
       return response.data;
     } catch (error) {
-      console.error('Error fetching popular movies:', error);
+      console.error('Error al obtener películas populares:', error);
       throw error;
     }
   },
@@ -25,11 +26,12 @@ const tmdbService = {
         params: {
           api_key: API_KEY,
           query: query,
+          language: 'es-ES',  // Agregamos soporte para español
         },
       });
       return response.data;
     } catch (error) {
-      console.error('Error searching for movies:', error);
+      console.error('Error al buscar películas:', error);
       throw error;
     }
   },
@@ -39,16 +41,15 @@ const tmdbService = {
       const response = await axios.get(`${BASE_URL}/movie/${movieId}`, {
         params: {
           api_key: API_KEY,
+          language: 'es-ES',  // Agregamos soporte para español
         },
       });
       return response.data;
     } catch (error) {
-      console.error('Error fetching movie details:', error);
+      console.error('Error al obtener detalles de la película:', error);
       throw error;
     }
   },
 };
-
-  
 
 export default tmdbService;

@@ -11,6 +11,12 @@
         <BuscarPeliculas />
 
         <div class="container">
+            <MovieSlider 
+                v-if="recommendedMovies.length > 0"
+                :movies="recommendedMovies.slice(0, 5)"
+                class="my-4 movie-slider-container"
+            />
+
             <h2 class="text-center my-4">Películas Recomendadas</h2>
             <div class="row">
                 <div class="col-md-4" v-for="movie in recommendedMovies" :key="movie.id">
@@ -28,71 +34,83 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <Footer />
     </div>
 </template>
 
 <script>
-    import tmdbService from '../services/tmdbService';
-    import BuscarPeliculas from '../components/BuscarPeliculas.vue'; // importar componente de busqeuda
-    import Footer from '../components/Footer.vue'; // Importa el componente Footer
-    
+import tmdbService from '../services/tmdbService';
+import BuscarPeliculas from '../components/BuscarPeliculas.vue';
+import Footer from '../components/Footer.vue';
+import MovieSlider from '../components/MovieSlider.vue';
 
-    export default {
-        data() {
-            return {
-                recommendedMovies: [],
-            };
-        },
-        async created() {
-            try {
-                const data = await tmdbService.getPopularMovies();
-                this.recommendedMovies = data.results.slice(0, 6);
-            } catch (error) {
-                console.error('Error loading recommended movies:', error);
+export default {
+    components: {
+        BuscarPeliculas,
+        Footer,
+        MovieSlider,
+    },
+    
+    data() {
+        return {
+            recommendedMovies: []
+        };
+    },
+    
+    async created() {
+        try {
+            const response = await tmdbService.getPopularMovies();
+            if (response?.results) {
+                this.recommendedMovies = response.results.filter(movie => 
+                    movie.backdrop_path && movie.title && movie.overview
+                );
             }
-        },
-        components: {
-            BuscarPeliculas,
-            Footer, // Registra el componente Footer
-        },
-    };
+        } catch (error) {
+            console.error('Error al cargar las películas:', error);
+        }
+    }
+};
 </script>
 
 <style scoped>
-    .jumbotron {
-        background-color: #f8f9fa;
-        border-radius: 0.3rem;
-        padding: 2rem 1rem;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+.jumbotron {
+    background-color: #f8f9fa;
+    border-radius: 0.3rem;
+    padding: 2rem 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-    .card {
-        border: none;
-        transition: transform 0.3s;
-    }
+.card {
+    border: none;
+    transition: transform 0.3s;
+}
 
-        .card:hover {
-            transform: scale(1.05);
-        }
+.card:hover {
+    transform: scale(1.05);
+}
 
-    .card-title {
-        font-size: 1.5rem;
-        color: #343a40;
-    }
+.card-title {
+    font-size: 1.5rem;
+    color: #343a40;
+}
 
-    .card-text {
-        font-size: 1rem;
-        color: #6c757d;
-    }
+.card-text {
+    font-size: 1rem;
+    color: #6c757d;
+}
 
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-    }
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.movie-slider-container {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}
 </style>

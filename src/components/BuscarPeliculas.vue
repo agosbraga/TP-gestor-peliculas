@@ -1,37 +1,39 @@
 <template>
-    <div class="container my-4">
+  <div class="container my-4">
       <h1 class="text-center">Buscar Películas</h1>
-      <input
-        type="text"
-        v-model="query"
-        placeholder="Ingresa el título de la película"
-        class="form-control my-3"
-        @keyup.enter="buscarPeliculas"
-      />
-      <button class="btn btn-primary" @click="buscarPeliculas">Buscar</button>
-  
-      <div v-if="peliculas.length" class="mt-4">
-        <h2>Resultados de la Búsqueda</h2>
-        <ul class="list-group">
-          <li
-            v-for="pelicula in peliculas"
-            :key="pelicula.id"
-            class="list-group-item d-flex align-items-center"
-            @click="verDetallePelicula(pelicula.id)"
-            style="cursor: pointer;"
-          >
-            <img :src="getPosterUrl(pelicula.poster_path)" alt="Poster" width="50" class="me-3" />
-            <div>
-              <h5>{{ pelicula.title }}</h5>
-              <p>{{ pelicula.overview }}</p>
-              <small class="text-muted">Fecha de lanzamiento: {{ pelicula.release_date }}</small>
-            </div>
-          </li>
-        </ul>
+        <div class="input-group mb-3">
+          <input
+              type="text"
+              v-model="query"
+              placeholder="Ingresa el título de la película"
+              class="form-control"
+              @keyup.enter="buscarPeliculas"
+          />
+          <button class="btn btn-primary" @click="buscarPeliculas">Buscar</button>
       </div>
-      <p v-else class="text-center" v-if="buscado">No se encontraron resultados.</p>
-    </div>
-  </template>
+
+      <div v-if="peliculas.length" class="mt-4">
+          <h2>Resultados de la Búsqueda</h2>
+          <ul class="list-group">
+              <li
+                  v-for="pelicula in peliculas"
+                  :key="pelicula.id"
+                  class="list-group-item d-flex align-items-center"
+                  @click="verDetallePelicula(pelicula.id)"
+                  style="cursor: pointer;"
+              >
+                  <img :src="getPosterUrl(pelicula.poster_path)" alt="Poster" width="50" class="me-3" />
+                  <div>
+                      <h5>{{ pelicula.title }}</h5>
+                      <p>{{ pelicula.overview }}</p>
+                      <small class="text-muted">Fecha de lanzamiento: {{ pelicula.release_date }}</small>
+                  </div>
+              </li>
+          </ul>
+      </div>
+      <p v-else-if="buscado" class="text-center">No se encontraron resultados.</p>
+  </div>
+</template>
   
   <script>
   import axios from 'axios';
@@ -92,7 +94,20 @@
   
   <style scoped>
   .container {
-    max-width: 800px;
+      max-width: 800px;
+  }
+  
+  .input-group .btn {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+  }
+  
+  .input-group .form-control:focus {
+      z-index: 1;
+      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  }
+  
+  .list-group-item:hover {
+      background-color: #f8f9fa;
   }
   </style>
-  
