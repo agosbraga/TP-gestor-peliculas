@@ -8,6 +8,9 @@
             <TopMovies :movies="topMovies" />
         </div>
 
+        <!-- Diferencia de Puntuaciones -->
+        <RatingDifference />
+
         <!-- Usuarios con Actividad Reciente -->
         <UserList :users="activeUsers" />
     </div>
@@ -17,9 +20,11 @@
     import MetricCard from './MetricCard.vue';
     import UserList from './UserList.vue';
     import TopMovies from './TopMovies.vue';
+    import RatingDifference from './RatingDifference.vue';
 
-    export default {
-        components: { MetricCard, UserList, TopMovies },
+export default {
+    components: { 
+        MetricCard,UserList, TopMovies,RatingDifference },
         data() {
             return {
                 metrics: {
@@ -51,23 +56,11 @@
                         .slice(0, 3)
                         .map(([movieId, count]) => ({ movieId, count }));
 
-                    // Limpiar el arreglo topMovies
-                    this.topMovies = [];
-
-                    // Obtener los nombres de las películas de TMDB de manera secuencial
-                    for (const movie of sortedMovies) {
-                        const urlApi = "https://api.themoviedb.org/3/movie/" + movie.movieId + "?api_key=603d7bde6e4548b50f364043d0b4115c" 
-                        const tmdbResponse = await fetch(urlApi);
-                        const movieData = await tmdbResponse.json();
-                        
-                        // Agregar cada película a topMovies con su nombre y conteo
-                        this.topMovies.push({ name: movieData.title, count: movie.count });
-                    }
-                    
-                    } catch (error) {
+                    this.topMovies = sortedMovies;
+                } catch (error) {
                     console.error('Error al obtener películas:', error);
-                    }
-                },
+                }
+            },
 
             async fetchActiveUsers() {
                 try {
