@@ -2,8 +2,8 @@
     <div class="top-movies">
         <h3>Top 3 Películas con más Reseñas</h3>
         <ul>
-            <li v-for="movie in movies" :key="movie.movieId">
-                <span class="movie-title">Película ID: {{ movie.name }}</span>
+            <li v-for="(movie, index) in movies" :key="movie.movieId">
+                <span class="movie-title">{{ index + 1 }}: {{ movie.name }}</span>
                 <span class="movie-description">Reseñas: {{ movie.count }}</span>
             </li>
         </ul>

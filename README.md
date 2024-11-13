@@ -1,5 +1,19 @@
 # Vue 3 + Vite
+# App de Peliculas
+## Requisitos Previos
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+- **Node.js** (versión 12 o superior)
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+- **npm** para la gestión de paquetes
+
+## Instalación y Ejecución
+
+1. Clona el repositorio:
+   git clone https://github.com/agosbraga/TP-gestor-peliculas.git
+   
+2. cd TP-gestor-peliculas
+
+2. npm install
+
+4. npm run dev
+ 
