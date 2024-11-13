@@ -91,6 +91,7 @@
             <ul class="dropdown-menu">
 
               <li><button @click="logout" class="dropdown-item">Cerrar sesión</button></li>
+              <li v-if="authStore.user.RoleAdmin" ><button @click="dashboard" class="dropdown-item">Dashboard</button></li>
 
             </ul>
 
@@ -141,6 +142,10 @@ const isAdmin = computed(() => authStore.user?.role === 'admin');
 const logout = () => {
   authStore.logout();
   router.push('/'); // Redirige a la página principal
+};
+
+const dashboard = () => {
+  router.push('/Dashboard'); // Redirige al Dashboard
 };
 
 const searchQuery = ref('');
