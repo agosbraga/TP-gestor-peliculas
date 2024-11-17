@@ -56,8 +56,19 @@ export default {
                         .slice(0, 3)
                         .map(([movieId, count]) => ({ movieId, count }));
 
-                    this.topMovies = sortedMovies;
-                } catch (error) {
+                   // Limpiar el arreglo topMovies
+                   this.topMovies = [];
+                    // Obtener los nombres de las películas de TMDB de manera secuencial
+                    for (const movie of sortedMovies) {
+                        const urlApi = "https://api.themoviedb.org/3/movie/" + movie.movieId + "?api_key=603d7bde6e4548b50f364043d0b4115c" 
+                        const tmdbResponse = await fetch(urlApi);
+                        const movieData = await tmdbResponse.json();
+                        
+                        // Agregar cada película a topMovies con su nombre y conteo
+                        this.topMovies.push({ name: movieData.title, count: movie.count });
+                    }
+                    
+                    } catch (error) {
                     console.error('Error al obtener películas:', error);
                 }
             },
